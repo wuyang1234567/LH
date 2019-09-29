@@ -1,0 +1,78 @@
+
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/bin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background-color: #3c3c3c;
+        }
+        #leftnav{
+            margin-left: 0;
+            background-color: #3c3c3c;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+{#头部导航#}
+    <div class="row">
+          <nav class="navbar  navbar-inverse navbar-fixed-top " id="headernav">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">路赞后台管理系统</a>
+                </div>
+                  {% block username %}
+                  <div>
+                      <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#"><span class="glyphicon glyphicon-user" style="margin-right: 10px"> </span>欢迎 <span>用户名</span></a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-log-out" style="margin-right: 10px"></span >退出</a></li>
+                      </ul>
+                  </div>
+                  {% endblock %}
+                </div><!-- /.navbar-collapse -->
+            </nav>
+    </div>
+{#头部导航结束#}
+        <div class="row" style="margin-top:50px" >
+            <div class="col-md-2 keynote" id="leftnav">
+              <ul class="nav  nav-sidebar " >
+                <li><a href="#"><span class="glyphicon glyphicon-home white" aria-hidden="true">&nbsp;首页</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-th-list white" aria-hidden="true">&nbsp;菜单管理</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-book white" aria-hidden="true">&nbsp;文章管理</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-user white" aria-hidden="true">&nbsp;用户管理</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-bookmark white" aria-hidden="true">&nbsp;推荐位管理</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-tasks white" aria-hidden="true">&nbsp;推荐位内容管理</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-cog white" aria-hidden="true">&nbsp;基本管理</span></a></li>
+              </ul>
+
+            </div>
+            <div class="col-md-10">
+            {% block right %}
+
+            {% endblock %}
+            </div>
+        </div>
+     </div>
+</body>
+<script src="/static/bin/jq/jquery.js"></script>
+<script src="/static/bin/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    var heardernavheight;
+    var windowheight;
+    var diffheight;
+    var leftnavheight;
+    init();
+    function init(){
+        heardernavheight=$("#headernav").height();
+        windowheight=$(document).height();
+        diffheight =windowheight-heardernavheight;
+        $("#leftnav").height(diffheight);
+
+    }
+</script>
+</html>
