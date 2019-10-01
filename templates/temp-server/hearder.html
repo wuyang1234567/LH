@@ -41,15 +41,14 @@
         <div class="row" style="margin-top:50px" >
             <div class="col-md-2 keynote" id="leftnav">
               <ul class="nav  nav-sidebar " >
-                <li><a href="#"><span class="glyphicon glyphicon-home white" aria-hidden="true">&nbsp;首页</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-th-list white" aria-hidden="true">&nbsp;菜单管理</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-book white" aria-hidden="true">&nbsp;文章管理</span></a></li>
+                <li><a href="/server"><span class="glyphicon glyphicon-home white" aria-hidden="true">&nbsp;首页</span></a></li>
+                <li><a href="/server/menu"><span class="glyphicon glyphicon-th-list white" aria-hidden="true">&nbsp;菜单管理</span></a></li>
+                <li><a href="/server/articlelist"><span class="glyphicon glyphicon-book white" aria-hidden="true">&nbsp;文章管理</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-user white" aria-hidden="true">&nbsp;用户管理</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-bookmark white" aria-hidden="true">&nbsp;推荐位管理</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-tasks white" aria-hidden="true">&nbsp;推荐位内容管理</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-cog white" aria-hidden="true">&nbsp;基本管理</span></a></li>
               </ul>
-
             </div>
             <div class="col-md-10">
             {% block right %}
@@ -72,7 +71,6 @@
         windowheight=$(document).height();
         diffheight =windowheight-heardernavheight;
         $("#leftnav").height(diffheight);
-
     }
 </script>
 </html>
