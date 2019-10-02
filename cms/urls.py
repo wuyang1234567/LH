@@ -23,5 +23,6 @@ urlpatterns = [
     path('list/',views.list),
     path('detail/',views.detail),
     path('server/',include("server.urls")),
-
+    path('client/',include("client.urls")),
+    path('ueditor/',include("DjangoUeditor.urls")),
 ]
