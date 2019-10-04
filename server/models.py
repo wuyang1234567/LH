@@ -1,8 +1,11 @@
 from django.db import models
 class admin(models.Model):
+    # 新增加字段：头像和简介
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=8)
     email = models.CharField(max_length=50)
+    heading=models.CharField(max_length=50,null=True)
+    briefInfo=models.CharField(max_length=300,null=True)
     lasttime=models.DateTimeField()
 class menu(models.Model):
     name = models.CharField(max_length=30)

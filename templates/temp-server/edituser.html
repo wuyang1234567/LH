@@ -59,39 +59,40 @@
         </div>
     </div>
     <div class="row container" style="margin: 35px 0 0 10%">
-    <form class="form-horizontal" action="/server/userHandler" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal" action="/server/edituserHandler" method="post" enctype="multipart/form-data">
         {% csrf_token %}
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">用户</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputEmail3" placeholder="请输入用户名" name="name">
+              <input type="text" class="form-control" id="name" placeholder="请输入用户名" name="name">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码" name="pwd">
+              <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">邮箱</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputPassword3" placeholder="请输入邮箱" name="email">
+              <input type="email" class="form-control" id="email" placeholder="请输入邮箱" name="email">
             </div>
           </div>
             <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">头像</label>
             <div class="col-sm-10">
-              <input type="file" id="exampleInputFile" placeholder="选择文件" name="heading">
+              <input type="file" id="heading" placeholder="选择文件" name="heading">
             </div>
           </div>
             <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">简介</label>
+            <label for="briefInfo" class="col-sm-2 control-label">简介</label>
             <div class="col-sm-10">
                 {{ form.media }}
                 {{ form }}
             </div>
           </div>
+
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-primary">提交</button>
@@ -118,15 +119,34 @@
         windowheight=$(document).height();
         diffheight =windowheight-heardernavheight;
         $("#leftnav").height(diffheight);
+        var _href=location.href;
+        var userid=_href.split("=")[1];
+        console.log(userid);
+        $.ajax({
+                url:"/server/adduseredit",
+                type:"get",
+                data:{
+                    userid:userid
+                },
+                dataType:"json",
+                success:function (data) {
+                    alert("ajax成功");
+                    console.log(data["data"]["username"]);
+                    $("#name").val(data["data"]["username"]);
+                    $("#pwd").val(data["data"]["password"]);
+                    $("#email").val(data["data"]["email"]);
+                    $("#heading").val(data["data"]["heading"]);
+                    $("#briefInfo").val(data["data"]["briefInfo"]);
+                    {#location.href="edituser?id="+idvalue#}
+                }
+            });
     }
         var validate=$("form").validate({
             submitHandler:function(form){
-                alert("888");
                 sendDataToServer1()
             },
         });
         function sendDataToServer1() {
-            alert("999");
             $("form").ajaxSubmit(function (message) {
                 console.log("后端返回的数据" + message);
                 var data=JSON.parse(message);

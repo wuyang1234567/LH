@@ -1,17 +1,70 @@
-{% extends 'temp-server/hearder.html' %}
-{% block right %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/bin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background-color: #3c3c3c;
+        }
+        #leftnav{
+            margin-left: 0;
+            background-color: #3c3c3c;
+        }
+        img{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+{#头部导航#}
     <div class="row">
+          <nav class="navbar  navbar-inverse navbar-fixed-top " id="headernav">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">路赞后台管理系统</a>
+                </div>
+                  {% block username %}
+                  <div>
+                      <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#"><span class="glyphicon glyphicon-user" style="margin-right: 10px"> </span>欢迎 <span>用户名</span></a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-log-out" style="margin-right: 10px"></span >退出</a></li>
+                      </ul>
+                  </div>
+                  {% endblock %}
+                </div><!-- /.navbar-collapse -->
+            </nav>
+    </div>
+{#头部导航结束#}
+        <div class="row" style="margin-top:50px" >
+            <div class="col-md-2 keynote" id="leftnav">
+              <ul class="nav  nav-sidebar " >
+                <li><a href="/server"><span class="glyphicon glyphicon-home white" aria-hidden="true">&nbsp;首页</span></a></li>
+                <li><a href="/server/menu"><span class="glyphicon glyphicon-th-list white" aria-hidden="true">&nbsp;菜单管理</span></a></li>
+                <li><a href="/server/articlelist"><span class="glyphicon glyphicon-book white" aria-hidden="true">&nbsp;文章管理</span></a></li>
+                <li><a href="/server/user"><span class="glyphicon glyphicon-user white" aria-hidden="true">&nbsp;用户管理</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-bookmark white" aria-hidden="true">&nbsp;推荐位管理</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-tasks white" aria-hidden="true">&nbsp;推荐位内容管理</span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-cog white" aria-hidden="true">&nbsp;基本管理</span></a></li>
+              </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
         <div class="col-xs-12">
             <ol class="breadcrumb" style="margin: 25px 0 0 30px">
                 <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#">用户管理</a></li>
                 <li>用户列表</li>
             </ol>
         </div>
-
     </div>
     <div class="row" style="margin-top: 20px">
          <div class="col-xs-2">
-              <button class="btn btn-primary" style="margin-left: 30px">添加用户</button>
+              <button class="btn btn-primary toadduser" style="margin-left: 30px">添加用户</button>
          </div>
     </div>
     <div class="row"  style="margin: 25px 0 0 30px">
@@ -26,9 +79,63 @@
               <th>更新时间</th>
               <th>操作</th>
           </tr>
+          {% for item in nameList %}
+              <tr>
+                 <td><input type="checkbox" id="inlineCheckbox1" value="option1"></td>
+                 <td id="id">{{ item.id }}</td>
+                 <td>{{ item.username }}</td>
+                 <td>{{ item.email }}</td>
+                 <td>{{ item.briefInfo }}</td>
+                 <td class="heading"><img src= "/static/uploads/{{ item.heading }}"/></td>
+                 <td>{{ item.lasttime }}</td>
+                 <td>
+                     <button class="btn btn-default glyphicon glyphicon-edit btn-primary edit" data_name="{{ item.id }}"></button>
+                     <button class="btn btn-default glyphicon glyphicon-trash btn-danger trash" id="{{ item.id }}"></button>
+                 </td>
+              </tr>
+          {% endfor %}
         </table>
-    </div>
-
-
-
-{% endblock %}
+            </div>
+            </div>
+        </div>
+     </div>
+</body>
+<script src="/static/bin/jq/jquery.js"></script>
+<script src="/static/bin/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    var heardernavheight;
+    var windowheight;
+    var diffheight;
+    var leftnavheight;
+    init();
+    function init(){
+        {#alert("888");#}
+        heardernavheight=$("#headernav").height();
+        windowheight=$(document).height();
+        diffheight =windowheight-heardernavheight;
+        $("#leftnav").height(diffheight);
+    }
+    $(".toadduser").click(function () {
+        {#alert("toadduser")#}
+        location.href="/server/adduser"
+    });
+    $("button").click(function () {
+        idvalue=$(this).attr("data_name");
+        alert(idvalue);
+        location.href="edituser?id="+idvalue;
+        {#$.ajax({#}
+        {#        url:"/server/adduseredit",#}
+        {#        type:"get",#}
+        {#        data:{#}
+        {#            idvalue:idvalue#}
+        {#        },#}
+        {#        dataType:"json",#}
+        {#        success:function (data) {#}
+        {#            alert("ajax成功");#}
+        {#            console.log(data);#}
+        {#            location.href="edituser?id="+idvalue#}
+        {#        }#}
+        {#    });#}
+    })
+</script>
+</html>

@@ -11,24 +11,7 @@
 
 </head>
 <body>
-{#最上面导航条#}
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">路赞新闻杂志（图片）</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">体育</a></li>
-        <li><a href="#">科技</a></li>
-        <li><a href="#">综合</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+{% include 'temp-client/common/header.html' %}
 <div class="contain" style="margin-right: 30px">
 <div class="row" style="margin-bottom: 100px;margin-left: 50px">
   <div class="col-md-9">
@@ -196,11 +179,7 @@
   </div>
 </div>
 </div>
-<nav class="navbar navbar-inverse text-center navbar-fixed-bottom">
-  <div class="container" style="color:#F2ECA2">
-    最底部
-  </div>
-</nav>
+{% include 'temp-client/common/footer.html' %}
 </body>
  <script src="/static/libs/jquery-3.4.1.js"></script>
 <script src="/static/libs/bootstrap/bootstrap-3.3.7/dist/js/bootstrap.js"></script>

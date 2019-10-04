@@ -13,17 +13,17 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="#">路赞新闻杂志（图片）</a>
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">体育</a></li>
-            <li><a href="#">科技</a></li>
-            <li><a href="#">综合</a></li>
+               {% for item in list %}
+                    <li style="color: white;margin-right: 22px;margin-top: 13px">{{ item.name }}</li>
+               {% endfor %}
           </ul>
         </div>
       </div>
     </nav>
 </body>
+<script>
+</script>
 </html>
