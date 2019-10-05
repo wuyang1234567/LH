@@ -26,21 +26,23 @@ def user(request):
     }
     return render(request, "temp-server/user.html",namelist)
 def userHandler(request):
-    print("444")
     username = request.POST.get('name')
     pwd = request.POST.get('pwd')
     email=request.POST.get('email')
     briefInfo = request.POST.get('briefInfo')
     lasttime=datetime.now()
     headImg = request.FILES.get("heading")
-    print(headImg)
+    list = admin.objects.values("username").all()
+    for item in list:
+        print(item["username"])
+        if item["username"]==username:
+            return HttpResponse(utils.returnResult(1, "用户已经存在"))
     size=headImg.size
     if float(size) > 10:
         print("文件过大")
     if headImg.name.split(".")[-1] not in ["jpg", "jpeg", "png"]:
         print("文件类型不正确")
     filename = "headImg_" + str(int(datetime.now().timestamp() * 1000000)) + "." + headImg.name.split(".")[-1]
-    print(filename)
     savePath = "static/uploads/" + filename
     # 写入文件中
     with open(savePath, 'wb') as f:
@@ -51,7 +53,6 @@ def userHandler(request):
     newuser = admin(username=username,password=pwd,email=email,lasttime=lasttime,heading=filename)
     newuser.save()
     return HttpResponse(utils.returnResult(0, "增加用户名成功"))
-    # return render(request,"temp-server/user.html")
 class TestUEditorForm(forms.Form):
     content = UEditorField('内容', width=600, height=300, toolbars="full", imagePath="static/images/", filePath="static/files/",
     upload_settings={"imageMaxSize":1204000},
@@ -70,33 +71,36 @@ def edituser(request):
     form = TestUEditorForm()
     return render(request, "temp-server/edituser.html",{"form":form})
 def edituserHandler(request):
+    print("进了edituserHandler")
+    hiddenid = request.POST.get('hiddenid')
+    # print("当前id为",hiddenid)
     username = request.POST.get('name')
     pwd = request.POST.get('pwd')
     email = request.POST.get('email')
     briefInfo = request.POST.get('briefInfo')
     lasttime = datetime.now()
     headImg = request.FILES.get("heading")
-    print(headImg)
+    # print(headImg)
     size = headImg.size
     if float(size) > 10:
         print("文件过大")
     if headImg.name.split(".")[-1] not in ["jpg", "jpeg", "png"]:
         print("文件类型不正确")
     filename = "headImg_" + str(int(datetime.now().timestamp() * 1000000)) + "." + headImg.name.split(".")[-1]
-    print(filename)
+    # print(filename)
     savePath = "static/uploads/" + filename
-    # 写入文件中
+    # # 写入文件中
     with open(savePath, 'wb') as f:
         for file in headImg.chunks():
             f.write(file)
             f.flush()
-    print(username, pwd, email, lasttime, filename)
-    # 改写编辑  把编辑后的存进数据库
-    admin.objects.filter(title__contains="1").update(author="王五")
-    # newuser = admin(username=username, password=pwd, email=email, lasttime=lasttime, heading=filename)
-    # newuser.save()
-    return HttpResponse(utils.returnResult(0, "增加用户名成功"))
-
+    # print(username, pwd, email, lasttime, filename)
+    admin.objects.filter(id=hiddenid).update(username=username,password=pwd,email=email,lasttime=lasttime,heading=filename)
+    return HttpResponse(utils.returnResult(0, "更改用户信息成功"))
+def deleteuser(request):
+    idvalue = request.GET.get("idvalue")
+    admin.objects.filter(id=idvalue).delete()
+    return HttpResponse(utils.returnResult(0, "删除成功"))
 def login(request):
     return render(request,"temp-server/login.html")
 def loginhttp(request):

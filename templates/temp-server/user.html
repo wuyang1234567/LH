@@ -90,7 +90,7 @@
                  <td>{{ item.lasttime }}</td>
                  <td>
                      <button class="btn btn-default glyphicon glyphicon-edit btn-primary edit" data_name="{{ item.id }}"></button>
-                     <button class="btn btn-default glyphicon glyphicon-trash btn-danger trash" id="{{ item.id }}"></button>
+                     <button class="btn btn-default glyphicon glyphicon-trash btn-danger trash" idvalue="{{ item.id }}"></button>
                  </td>
               </tr>
           {% endfor %}
@@ -106,7 +106,6 @@
     var heardernavheight;
     var windowheight;
     var diffheight;
-    var leftnavheight;
     init();
     function init(){
         {#alert("888");#}
@@ -116,26 +115,34 @@
         $("#leftnav").height(diffheight);
     }
     $(".toadduser").click(function () {
-        {#alert("toadduser")#}
         location.href="/server/adduser"
     });
-    $("button").click(function () {
+    $(".edit").click(function () {
         idvalue=$(this).attr("data_name");
         alert(idvalue);
         location.href="edituser?id="+idvalue;
-        {#$.ajax({#}
-        {#        url:"/server/adduseredit",#}
-        {#        type:"get",#}
-        {#        data:{#}
-        {#            idvalue:idvalue#}
-        {#        },#}
-        {#        dataType:"json",#}
-        {#        success:function (data) {#}
-        {#            alert("ajax成功");#}
-        {#            console.log(data);#}
-        {#            location.href="edituser?id="+idvalue#}
-        {#        }#}
-        {#    });#}
+    });
+    $(".trash").click(function () {
+        idvalue=$(this).attr("idvalue");
+        alert(idvalue);
+        $.ajax({
+                url:"/server/deleteuser",
+                type:"get",
+                data:{
+                    idvalue:idvalue
+                },
+                dataType:"json",
+                success:function (data) {
+                    alert("删除成功");
+                    location.href="/server/user";
+                    {#console.log(data["data"]["username"]);#}
+                    {#$("#name").val(data["data"]["username"]);#}
+                    {#$("#pwd").val(data["data"]["password"]);#}
+                    {#$("#email").val(data["data"]["email"]);#}
+                    {#$("#heading").val(data["data"]["heading"]);#}
+                    {#$("#briefInfo").val(data["data"]["briefInfo"]);#}
+                }
+            });
     })
 </script>
 </html>

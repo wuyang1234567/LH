@@ -11,7 +11,9 @@ urlpatterns = [
     path("adduser",views.adduser),
     path("adduseredit",views.adduseredit),
     path("edituser", views.edituser),
+    path("edituserHandler",views.edituserHandler),
     path("userHandler",views.userHandler),
+    path("deleteuser", views.deleteuser),
     path("login", views.login),
     path("loginhttp", views.loginhttp),
 ]

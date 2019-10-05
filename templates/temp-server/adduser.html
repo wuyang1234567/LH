@@ -84,6 +84,7 @@
             <div class="col-sm-10">
               <input type="file" id="exampleInputFile" placeholder="选择文件" name="heading">
             </div>
+            <img class="preview" width="200px" height="200px" >
           </div>
             <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">简介</label>
@@ -121,12 +122,12 @@
     }
         var validate=$("form").validate({
             submitHandler:function(form){
-                alert("888");
+                {#alert("888");#}
                 sendDataToServer1()
             },
         });
         function sendDataToServer1() {
-            alert("999");
+            {#alert("999");#}
             $("form").ajaxSubmit(function (message) {
                 console.log("后端返回的数据" + message);
                 var data=JSON.parse(message);
@@ -135,7 +136,16 @@
                     location.href="/server/user";
                     return false
                  }
+                else{
+                    alert(data["msg"]);
+                    return false;
+                }
             })
         }
+        $("input[name='heading']").change(function(){
+            var imgFile=this.files.item(0);
+            var _url=window.URL.createObjectURL(imgFile);
+            $(".preview").attr("src",_url);
+        })
 </script>
 </html>

@@ -84,6 +84,7 @@
             <div class="col-sm-10">
               <input type="file" id="heading" placeholder="选择文件" name="heading">
             </div>
+            <img class="preview" width="200px" height="200px" >
           </div>
             <div class="form-group">
             <label for="briefInfo" class="col-sm-2 control-label">简介</label>
@@ -92,7 +93,7 @@
                 {{ form }}
             </div>
           </div>
-
+        <input type="hidden" id="hidden" name="hiddenid">
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-primary">提交</button>
@@ -121,7 +122,9 @@
         $("#leftnav").height(diffheight);
         var _href=location.href;
         var userid=_href.split("=")[1];
-        console.log(userid);
+        console.log("userid为",userid);
+        $("#hidden").val(userid);
+
         $.ajax({
                 url:"/server/adduseredit",
                 type:"get",
@@ -135,9 +138,8 @@
                     $("#name").val(data["data"]["username"]);
                     $("#pwd").val(data["data"]["password"]);
                     $("#email").val(data["data"]["email"]);
-                    $("#heading").val(data["data"]["heading"]);
+                    $(".preview").attr("src","/static/uploads/"+data["data"]["heading"]);
                     $("#briefInfo").val(data["data"]["briefInfo"]);
-                    {#location.href="edituser?id="+idvalue#}
                 }
             });
     }
@@ -152,10 +154,16 @@
                 var data=JSON.parse(message);
                 if(data["code"]===0){
                     alert(data["msg"]);
+
                     location.href="/server/user";
                     return false
                  }
             })
         }
+        {# $("input[name='heading']").change(function(){#}
+        {#    var imgFile=this.files.item(0);#}
+        {#    var _url=window.URL.createObjectURL(imgFile);#}
+        {#    $(".preview").attr("src",_url);#}
+        {# })#}
 </script>
 </html>

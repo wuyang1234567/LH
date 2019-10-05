@@ -42,20 +42,20 @@
       <div class="col-md-2">
         <div class="row" style="margin-bottom: 14px">
             <div>
-                <img src="/static/images/reba2.png" alt="" class="img-thumbnail" style="width: 250px; height: 150px;position: relative;"/>
-                <p style="background-color :rgba(0,0,0,0.5);height:30px;line-height:30px;color: white;margin-top:-30px;position: absolute;width: 240px;margin-left: 5px">联合办公室：对马布里停赛有理有据</p>
+                <img src="/static/images/reba2.png" alt="" class="img-thumbnail smallimg" style="width: 250px; height: 150px;position: relative"/>
+                <p class="smallshadow" style="background-color :rgba(0,0,0,0.5);height:30px;line-height:30px;color: white;margin-top:-30px;position: absolute;width:240px;margin-left: 5px">联合办公室：对马布里停赛有理有据</p>
             </div>
         </div>
         <div class="row" style="margin-bottom: 14px">
             <div>
-                <img src="/static/images/reba2.png" alt="" class="img-thumbnail" style="width: 250px; height: 150px;position: relative;"/>
-                <p style="background-color :rgba(0,0,0,0.5);height:30px;line-height:30px;color: white;margin-top:-30px;position: absolute;width: 240px;margin-left: 5px">联合办公室：对马布里停赛有理有据</p>
+                <img src="/static/images/reba2.png" alt="" class="img-thumbnail smallimg" style="width: 250px; height: 150px;position: relative;"/>
+                <p class="smallshadow" style="background-color :rgba(0,0,0,0.5);height:30px;line-height:30px;color: white;margin-top:-30px;position: absolute;width: 240px;margin-left: 5px">联合办公室：对马布里停赛有理有据</p>
             </div>
         </div>
         <div class="row" style="margin-bottom: 14px">
             <div>
-                <img src="/static/images/reba2.png" alt="" class="img-thumbnail" style="width: 250px; height: 150px;position: relative;"/>
-                <p style="background-color :rgba(0,0,0,0.5);height:30px;line-height:30px;color: white;margin-top:-30px;position: absolute;width: 240px;margin-left: 5px">联合办公室：对马布里停赛有理有据</p>
+                <img src="/static/images/reba2.png" alt="" class="img-thumbnail smallimg" style="width: 250px; height: 150px;position: relative;"/>
+                <p class="smallshadow" style="background-color :rgba(0,0,0,0.5);height:30px;line-height:30px;color: white;margin-top:-30px;position: absolute;width: 240px;margin-left: 5px">联合办公室：对马布里停赛有理有据</p>
             </div>
         </div>
       </div>
@@ -87,95 +87,96 @@
       <div class="col-md-9">
           {#下半部分左边图片带文字部分#}
         <div>
-            <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 10px;padding-top:20px">
-                <div class="row">
-                  <div class="col-md-3">
-                    {% load static %}
-                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">
-                  </div>
-                  <div class="col-md-9" style="margin-left: -50px">
-                      <h3>富士康小米们的印囧之路</h3>
-                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>
-                      <div style="margin-top: 60px">
-                          <h5 style="display: inline-block">富士康小米们的印囧之路</h5>
-                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>
-                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（44）</h5>
+            {% for item in articlelist %}
+                <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 10px;padding-top:20px">
+                    <div class="row">
+                      <div class="col-md-3">
+                        {% load static %}
+                        <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">
                       </div>
-                  </div>
+                      <div class="col-md-9" style="margin-left: -50px">
+                          <h3>{{ item.title}}</h3>
+                          <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>
+                          <div style="margin-top: 60px">
+                              <h5 style="display: inline-block;margin-left: 15px">{{ item.lasttime }}</h5>
+                              <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（{{ item.num }}）</h5>
+                          </div>
+                      </div>
+                    </div>
+                    <input type="hidden" id="{{ item.id }}">
+{#                    把这个隐藏的idajax传到后端获取对应的详情#}
                 </div>
-            </div>
-            <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 20px;padding-top:10px">
-               <div class="row">
-                  <div class="col-md-3">
-                    {% load static %}
-                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">
-                  </div>
-                  <div class="col-md-9"  style="margin-left: -50px">
-                      <h3>富士康小米们的印囧之路</h3>
-                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>
-                      <div style="margin-top: 60px">
-                          <h5 style="display: inline-block">富士康小米们的印囧之路</h5>
-                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>
-                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（44）</h5>
-                      </div>
+            {% endfor %}
 
-                  </div>
-                </div>
-            </div>
-            <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 20px;padding-top:10px">
-                <div class="row">
-                  <div class="col-md-3">
-                    {% load static %}
-                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">
-                  </div>
-                  <div class="col-md-9" style="margin-left: -50px">
-                      <h3>富士康小米们的印囧之路</h3>
-                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>
-                      <div style="margin-top: 60px">
-                          <h5 style="display: inline-block">富士康小米们的印囧之路11</h5>
-                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>
-                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（84）</h5>
-                      </div>
 
-                  </div>
-                </div>
-            </div>
-            <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 20px;padding-top:10px;margin-bottom:20px">
-                <div class="row">
-                  <div class="col-md-3">
-                    {% load static %}
-                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">
-                  </div>
-                  <div class="col-md-9" style="margin-left: -50px">
-                      <h3>富士康小米们的印囧之路</h3>
-                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>
-                      <div style="margin-top: 60px">
-                          <h5 style="display: inline-block">富士康小米们的印囧之路</h5>
-                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>
-                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（44）</h5>
-                      </div>
-
-                  </div>
-                </div>
-            </div>
-            <div  style="margin-bottom: 100px">
-                <div class="row">
-                  <div class="col-md-3">
-                    {% load static %}
-                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">
-                  </div>
-                  <div class="col-md-9" style="margin-left: -50px">
-                      <h3>富士康小米们的印囧之路</h3>
-                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>
-                      <div style="margin-top: 60px">
-                          <h5 style="display: inline-block">富士康小米们的印囧之路</h5>
-                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>
-                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（44）</h5>
-                      </div>
-
-                  </div>
-                </div>
-            </div>
+{#            <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 20px;padding-top:10px">#}
+{#               <div class="row">#}
+{#                  <div class="col-md-3">#}
+{#                    {% load static %}#}
+{#                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">#}
+{#                  </div>#}
+{#                  <div class="col-md-9"  style="margin-left: -50px">#}
+{#                      <h3>富士康小米们的印囧之路</h3>#}
+{#                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>#}
+{#                      <div style="margin-top: 60px">#}
+{#                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>#}
+{#                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（44）</h5>#}
+{#                      </div>#}
+{##}
+{#                  </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 20px;padding-top:10px">#}
+{#                <div class="row">#}
+{#                  <div class="col-md-3">#}
+{#                    {% load static %}#}
+{#                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">#}
+{#                  </div>#}
+{#                  <div class="col-md-9" style="margin-left: -50px">#}
+{#                      <h3>富士康小米们的印囧之路</h3>#}
+{#                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>#}
+{#                      <div style="margin-top: 60px">#}
+{#                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>#}
+{#                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（84）</h5>#}
+{#                      </div>#}
+{##}
+{#                  </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 20px;padding-top:10px;margin-bottom:20px">#}
+{#                <div class="row">#}
+{#                  <div class="col-md-3">#}
+{#                    {% load static %}#}
+{#                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">#}
+{#                  </div>#}
+{#                  <div class="col-md-9" style="margin-left: -50px">#}
+{#                      <h3>富士康小米们的印囧之路</h3>#}
+{#                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>#}
+{#                      <div style="margin-top: 60px">#}
+{#                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>#}
+{#                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（44）</h5>#}
+{#                      </div>#}
+{##}
+{#                  </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div  style="margin-bottom: 100px">#}
+{#                <div class="row">#}
+{#                  <div class="col-md-3">#}
+{#                    {% load static %}#}
+{#                    <img src="{% static "images/reba2.png" %}" alt="My image" class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px">#}
+{#                  </div>#}
+{#                  <div class="col-md-9" style="margin-left: -50px">#}
+{#                      <h3>富士康小米们的印囧之路</h3>#}
+{#                      <h5>随着中国大陆，人工，材料成本的快速攀升，以及相关政策的倾斜</h5>#}
+{#                      <div style="margin-top: 60px">#}
+{#                          <h5 style="display: inline-block;margin-left: 15px">2017-8-26  09:10:25</h5>#}
+{#                          <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（44）</h5>#}
+{#                      </div>#}
+{##}
+{#                  </div>#}
+{#                </div>#}
+{#            </div>#}
         </div>
       </div>
     {#    下半部分右边的三张图片#}
@@ -209,6 +210,25 @@
 <script src="/static/libs/jquery.validate.js"></script>
 <script src="/static/libs/jquery.form.js"></script>
 <script>
-
+    {# init();#}
+    {#function init() {#}
+    {#    $.ajax({#}
+    {#        url:"/client/allList",#}
+    {#        type:"get",#}
+    {#        data:{#}
+    {#            type:0#}
+    {#        },#}
+    {#        dataType:"json",#}
+    {#        success:function (data) {#}
+    {#            alert("ajax成功");#}
+                {#console.log(data["data"]["username"]);#}
+                {#$("#name").val(data["data"]["username"]);#}
+                {#$("#pwd").val(data["data"]["password"]);#}
+                {#$("#email").val(data["data"]["email"]);#}
+                {#$(".preview").attr("src","/static/uploads/"+data["data"]["heading"]);#}
+                {#$("#briefInfo").val(data["data"]["briefInfo"]);#}
+    {#        }#}
+    {#    });#}
+    {# }#}
 </script>
 </html>
