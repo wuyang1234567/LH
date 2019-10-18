@@ -13,6 +13,19 @@
             margin-left: 0;
             background-color: #3c3c3c;
         }
+        #exampleInputFile{
+            width: 150px;
+            height: 150px;
+            opacity:0;
+            position: absolute;
+            top:25px;
+            z-index: 999;
+        }
+        .after{
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -59,50 +72,76 @@
         </div>
     </div>
     <div class="row container" style="margin: 35px 0 0 10%">
-    <form class="form-horizontal" action="/server/userHandler" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">用户</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputEmail3" placeholder="请输入用户名" name="name">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
-            <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码" name="pwd">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">邮箱</label>
-            <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputPassword3" placeholder="请输入邮箱" name="email">
-            </div>
-          </div>
-            <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">头像</label>
-            <div class="col-sm-10">
-              <input type="file" id="exampleInputFile" placeholder="选择文件" name="heading">
-            </div>
-            <img class="preview" width="200px" height="200px" >
-          </div>
-            <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">简介</label>
-            <div class="col-sm-10">
-                {{ form.media }}
-                {{ form }}
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-primary">提交</button>
-            </div>
-          </div>
-    </form>
+        <form class="form-horizontal" action="/server/userHandler" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">用户</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputEmail3" placeholder="请输入用户名" name="name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码" name="pwd">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">邮箱</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="inputPassword3" placeholder="请输入邮箱" name="email">
+                </div>
+              </div>
+                <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">头像</label>
+                <div class="col-sm-10">
+                  <input type="file" id="exampleInputFile" name="heading">
+                  <img class="after preview" src="/static/uploads/jia.jpg">
+                </div>
+{#                <img class="preview" width="200px" height="200px" >#}
+              </div>
+                <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">简介</label>
+                <div class="col-sm-10">
+                    {{ form.media }}
+                    {{ form }}
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-primary" id="tijiao" data-toggle="modal" >提交</button>
+                </div>
+              </div>
+        </form>
     </div>
             </div>
         </div>
      </div>
+{#以下是一个模态框#}
+<div class="modal fade" id="myModal"  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        增加管理员成功
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="ok">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModal1"  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        该管理员已存在
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="ok">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 <script src="/static/bin/jq/jquery.js"></script>
 <script src="/static/bin/bootstrap/js/bootstrap.min.js"></script>
@@ -122,7 +161,6 @@
     }
         var validate=$("form").validate({
             submitHandler:function(form){
-                {#alert("888");#}
                 sendDataToServer1()
             },
         });
@@ -130,15 +168,19 @@
             {#alert("999");#}
             $("form").ajaxSubmit(function (message) {
                 console.log("后端返回的数据" + message);
-                var data=JSON.parse(message);
-                if(data["code"]===0){
-                    alert(data["msg"]);
-                    location.href="/server/user";
+                if(message["code"]===0){
+                    {#alert(data["msg"]);#}
+                    $("#myModal").modal("show");
+                    $("#ok").click(function () {
+                        location.href="/server/user";
+                    });
                     return false
                  }
                 else{
-                    alert(data["msg"]);
-                    return false;
+                    $("#myModal1").modal("show");
+                    $("#ok").click(function () {
+                        return false;
+                    });
                 }
             })
         }

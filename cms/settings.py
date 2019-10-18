@@ -16,6 +16,24 @@ import pymysql         # 一定要添加这两行！
 pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+
+COLOR_LIST=[{
+    "color":"#00ffff",
+    "colortxt":"红色"
+},{
+    "color":"#ff00ff",
+    "colortxt":"绿色"
+}]
+UPLOAD={
+    "type":["jpg", "jpeg", "png"],
+    "unit":100
+}
+# 关于分页
+PAGES={
+    "everyCount":2,           #每页显示两条数据
+}
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 
@@ -28,7 +46,7 @@ SECRET_KEY = '&(cgq3m(+eab53-nt2d!!10o8b1=q(*kg&i=qbh0%&rm+52)bq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -52,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'server.admincheck.LoginAuth'
 ]
 
 ROOT_URLCONF = 'cms.urls'

@@ -2,9 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="/static/bin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Title</title>
+<link href="/static/bin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="/static/bin/jq/jquery.js"></script>
+<script src="../../static/js/bootstrap.js"></script>
+<script src="../../static/js/jquery.validate.js"></script>
+<script src="../../static/js/jquery.form.js"></script>
     <style>
         .navbar {
             background-color: #3c3c3c;
@@ -12,6 +16,19 @@
         #leftnav{
             margin-left: 0;
             background-color: #3c3c3c;
+        }
+        #exampleInputFile{
+            width: 150px;
+            height: 150px;
+            opacity:0;
+            position: absolute;
+            top:25px;
+            z-index: 999;
+        }
+        .after{
+            width: 150px;
+            height: 150px;
+            position: relative;
         }
     </style>
 </head>
@@ -25,14 +42,16 @@
                 <div class="navbar-header">
                   <a class="navbar-brand" href="#">路赞后台管理系统</a>
                 </div>
-                  {% block username %}
+
                   <div>
                       <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-user" style="margin-right: 10px"> </span>欢迎 <span>用户名</span></a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-log-out" style="margin-right: 10px"></span >退出</a></li>
+                          {% block username %}
+                            <li><a href="#"><span class="glyphicon glyphicon-user" style="margin-right: 10px"> </span>欢迎 <span>{{ name }}</span></a></li>
+                          {% endblock %}
+                            <li><a href="/server/quitlogin"><span class="glyphicon glyphicon-log-out" style="margin-right: 10px"></span >退出</a></li>
                       </ul>
                   </div>
-                  {% endblock %}
+
                 </div><!-- /.navbar-collapse -->
             </nav>
     </div>
@@ -40,13 +59,13 @@
         <div class="row" style="margin-top:50px" >
             <div class="col-md-2 keynote" id="leftnav">
               <ul class="nav  nav-sidebar " >
-                <li><a href="/server"><span class="glyphicon glyphicon-home white" aria-hidden="true">&nbsp;首页</span></a></li>
-                <li><a href="/server/menu"><span class="glyphicon glyphicon-th-list white" aria-hidden="true">&nbsp;菜单管理</span></a></li>
+                <li><a href="/server/" class="list-group-item"><span class="glyphicon glyphicon-home white" aria-hidden="true">&nbsp;首页</span></a></li>
+                <li><a href="/server/menus"><span class="glyphicon glyphicon-th-list white" aria-hidden="true">&nbsp;菜单管理</span></a></li>
                 <li><a href="/server/articlelist"><span class="glyphicon glyphicon-book white" aria-hidden="true">&nbsp;文章管理</span></a></li>
                 <li><a href="/server/user"><span class="glyphicon glyphicon-user white" aria-hidden="true">&nbsp;用户管理</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-bookmark white" aria-hidden="true">&nbsp;推荐位管理</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-tasks white" aria-hidden="true">&nbsp;推荐位内容管理</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-cog white" aria-hidden="true">&nbsp;基本管理</span></a></li>
+                <li><a href="/server/repos"><span class="glyphicon glyphicon-bookmark white" aria-hidden="true">&nbsp;推荐位管理</span></a></li>
+                <li><a href="/server/reposcontent"><span class="glyphicon glyphicon-tasks white" aria-hidden="true">&nbsp;推荐位内容管理</span></a></li>
+                <li><a href="/server/clear"><span class="glyphicon glyphicon-tasks white" aria-hidden="true">&nbsp;清理无用图片</span></a></li>
               </ul>
             </div>
             <div class="col-md-10">
@@ -57,19 +76,36 @@
         </div>
      </div>
 </body>
-<script src="/static/bin/jq/jquery.js"></script>
-<script src="/static/bin/bootstrap/js/bootstrap.min.js"></script>
+
 <script>
+
     var heardernavheight;
     var windowheight;
     var diffheight;
     var leftnavheight;
-    init();
-    function init(){
-        heardernavheight=$("#headernav").height();
-        windowheight=$(document).height();
-        diffheight =windowheight-heardernavheight;
-        $("#leftnav").height(diffheight);
+    {#init();#}
+    {#function init(){#}
+    heardernavheight=$("#headernav").height();
+    windowheight=$(document).height();
+    diffheight =windowheight-heardernavheight;
+    $("#leftnav").height(diffheight);
+
+    {# }#}
+       {% block js %}
+
+    {% endblock %}
+     changeActive();
+    function changeActive() {
+        dizhi=location.pathname;
+        {#console.log("------------"+dizhi);#}
+        $("#leftnav a").removeClass("list-group-item");
+        $("#leftnav a").each(function(){
+            var href=$(this).attr("href").split("?")[0];
+            {#console.log(href);#}
+            if(dizhi==href){
+                $(this).addClass("list-group-item")
+            }
+        })
     }
 </script>
 </html>

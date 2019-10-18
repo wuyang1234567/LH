@@ -1,82 +1,182 @@
 {% extends 'temp-server/hearder.html' %}
-{% block right %}
-     <div class="row">
-        <div class="col-xs-12">
-             <ol class="breadcrumb" style="margin: 25px 0 0 30px">
-                <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#">文章管理</a></li>
-                <li>添加文章</li>
-            </ol>
-        </div>
+{% block username %}
 
-    </div>
-    <div class="row container" style="margin: 35px 0 0 10%">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">标题</label>
-            <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="请输入标题">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">短标题</label>
-            <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="请输入短标题">
-            </div>
-          </div>
-            <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">缩略图</label>
-            <div class="col-sm-10">
-              <input type="file" id="exampleInputFile" placeholder="选择文件">
-            </div>
-          </div>
-            <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">标题颜色</label>
-            <div class="col-sm-10">
-              <select class="form-control">
-                  <option>选择颜色</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-            </div>
-          </div>
-            <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">所属栏目</label>
-            <div class="col-sm-10">
-              <select class="form-control">
-                  <option>选择所属栏目</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-            </div>
-          </div>
-            <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">来源</label>
-            <div class="col-sm-10">
-              <select class="form-control">
-                  <option>选择文章来源</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-            </div>
-          </div>
-            <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">内容</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" rows="20"></textarea>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-primary">提交</button>
-            </div>
-          </div>
-        </form>
-    </div>
 {% endblock %}
+{% block right %}
+                 <div class="row">
+                    <div class="col-xs-12">
+                         <ol class="breadcrumb" style="margin: 25px 0 0 30px">
+                            <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#">文章管理</a></li>
+                            <li class="ppp">添加文章</li>
+                        </ol>
+                    </div>
+
+                </div>
+                <div class="row container" style="margin: 35px 0 0 10%">
+                    <form class="form-horizontal" enctype="multipart/form-data" action="/server/addarticleHandler" method="post"  id="form">
+                        {% csrf_token %}
+                      <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputEmail3" name="title" placeholder="请输入标题">
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label"  >缩略图</label>
+                        <div class="col-sm-10">
+                          <input type="file" id="exampleInputFile" name="headimg">
+                            <img class="after preview" src="/static/uploads/jia.jpg">
+{#                          <img class=""  width="160px" height="160px"/>#}
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">标题颜色</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" name="color">
+                              {% for item in colorlist %}
+                                  <option value={{ item.color }}>{{ item.colortxt }}</option>
+                              {% endfor %}
+                              <option value="" disabled>无颜色</option>
+                            </select>
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label" >所属栏目</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" name="column">
+{#                              <option>选择所属栏目</option>#}
+                              {% for item in menuall %}
+                                  <option value="{{ item.id }}">{{ item.name }}</option>
+                              {% endfor %}
+                              <option value="" disabled>无栏目</option>
+                            </select>
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label" >内容</label>
+                           <div class="col-sm-10">
+                                {{ form.media }}
+                                {{ form }}
+                            </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+                    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <p id="msg"></p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn">确定</button>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+{% endblock %}
+
+{% block js %}
+     var obj;
+    var localdata;
+     var heardernavheight;
+    var windowheight;
+    var diffheight;
+    var leftnavheight;
+    init();
+    function init(){
+         heardernavheight=$("#headernav").height();
+        windowheight=$(document).height();
+        diffheight =windowheight-heardernavheight;
+        $("#leftnav").height(diffheight);
+        validate();
+         $("input[name='headimg']").change(function() {
+{#            alert("进了传文件那里")#}
+{#            console.log('headimg');#}
+
+            var imgFile = this.files.item(0);
+{#            console.log(imgFile["name"])#}
+            filePath=imgFile["name"]
+            var fileEnd = filePath.substring(filePath.indexOf("."));
+{#            console.log(fileEnd)#}
+            var fileTypes = [".jpg", ".png",".jpeg",".gif"];
+            for (var i = 0; i < fileTypes.length; i++) {
+                if (fileEnd ==fileTypes[i] ) {
+                    console.log("上传的是图片")
+                    var _url = window.URL.createObjectURL(imgFile);
+        {#            console.log(_url);#}
+                    $(".preview").attr("src", _url);
+                    break;
+                }else{
+                    alert("上传的不是图片")
+                    return false;
+                }
+            }
+
+        })
+    }
+    function validate(){
+        var validate=$("form").validate({
+            rules:{
+                title:{
+                    required:true,
+                },
+                column:{
+                    required:true,
+                },
+            },
+            messages:{
+               title:{
+                    required:"标题不符合要求",
+                },
+                column:{
+                    required:"栏目不符合要求",
+                },
+                content:{
+                     required:"内容不符合要求",
+                 }
+            },
+             submitHandler:function(form){
+                $("#form").ajaxSubmit(function(message){
+                    msgcode=message.code
+                    console.log(typeof msgcode)
+                    if(message.code===1){
+                        alert(message.msg);
+                        return false;
+                    }
+                    alert(message.msg)
+                    location.href="articlelist?page=1"
+                })
+             }
+        })
+    }
+{#    function verificationPicFile(file){#}
+{#        var fileTypes = [".jpg", ".png","jpeg","gif"];#}
+{#        var filePath = file.value;#}
+{#        console.log(filePath)#}
+{#        //当括号里面的值为0、空字符、false 、null 、undefined的时候就相当于false#}
+{#        if(filePath){#}
+{#            var isNext = false;#}
+{#            var fileEnd = filePath.substring(filePath.indexOf("."));#}
+{#            for (var i = 0; i < fileTypes.length; i++) {#}
+{#                if (fileTypes[i] == fileEnd) {#}
+{#                    isNext = true;#}
+{#                    break;#}
+{#                }#}
+{#            }#}
+{#            if (!isNext){#}
+{#                alert('不接受此文件类型');#}
+{#                file.value = "";#}
+{#                return false;#}
+{#            }#}
+{#        }else {#}
+{#            return false;#}
+{#        }#}
+{#    }#}
+{% endblock %}
+

@@ -16,7 +16,8 @@
 <div class="row">
   <div class="col-md-9">
       {#左边文字部分#}
-    <h1>这是详情页的文字</h1>
+     <h1 style="color: #00a0e9">标题：<span class="title"></span></h1>
+     <h2 class="content">内容：<span class="spandetail"></span></h2>
   </div>
   <div class="col-md-3">
     {#最右边文章排行#}
@@ -59,12 +60,35 @@
 </div>
 </div>
 </body>
- <script src="/static/libs/jquery-3.4.1.js"></script>
+<script src="/static/libs/jquery-3.4.1.js"></script>
 <script src="/static/libs/bootstrap/bootstrap-3.3.7/dist/js/bootstrap.js"></script>
 <script src="/static/libs/bootstrap/bootstrap-3.3.7/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script src="/static/libs/jquery.validate.js"></script>
 <script src="/static/libs/jquery.form.js"></script>
 <script>
+    init();
+    function init(){
+        dizhi=location.href;
+    console.log(dizhi);
+    articleid=dizhi.split("=")[1];
+    console.log(articleid);
+    $.ajax({
+            url:"/client/getDetailContent",
+            type:"get",
+            data:{
+                articleid:articleid
+            },
+            dataType:"json",
+            success:function (data) {
+                alert("ajax成功");
+                title=data["data"]["title"]["title"];
+                 console.log(data["data"]["detail"]);
+                detail=data["data"]["detail"]["content"];
+                $(".title").html(title);
+                $(".spandetail").html(detail)
+            }
+        });
+    }
 
 </script>
 </html>

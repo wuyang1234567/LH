@@ -1,0 +1,115 @@
+{% extends 'temp-server/hearder.html' %}
+{% block username %}
+
+{% endblock %}
+{% block right %}
+      <div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb" style="margin: 25px 0 0 30px">
+                <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a>推荐位管理</a></li>
+                <li>推荐位内容列表</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row "  style="margin: 25px 0 0 30px;">
+        <table class="table table-bordered ">
+          <tr>
+              <th class="text-center">id</th>
+              <th class="text-center">所在推荐位</th>
+              <th class="text-center">标题</th>
+              <th class="text-center">缩略图</th>
+              <th class="text-center">更新时间</th>
+              <th class="text-center">操作</th>
+          </tr>
+            {% for item in newscontentlist %}
+                <tr>
+                  <th class="text-center">{{ item.id }}</th>
+                    {% if item.positionid == 1  %}
+                  <th class="text-center">轮播</th>
+                    {% endif %}
+                    {% if item.positionid == 2  %}
+                  <th class="text-center">小广告</th>
+                    {% endif %}
+                    {% if item.positionid == 3  %}
+                  <th class="text-center">侧面广告</th>
+                    {% endif %}
+                  <th class="text-center">{{ item.title }}</th>
+                  <th class="text-center">
+                      {% if item.thumb %}
+                        <img  style="width: 50px; height:50px" src="/static/uploads/{{ item.thumb }}" />
+                     {% else %}
+                        <img  style="width: 50px; height:50px" src="/static/uploads/None.png" />
+                     {% endif %}
+                  </th>
+                  <th class="text-center">{{ item.lasttime }}</th>
+                  <th class="text-center">
+                      <a href="/server/editrepos?id={{ item.id }}"><button class="btn btn-default glyphicon glyphicon-edit btn-primary edit"></button></a>
+                      <a ><button class="btn btn-default glyphicon glyphicon-trash btn-danger delete" index="{{ item.id }}"></button></a>
+                  </th>
+              </tr>
+            {% endfor %}
+        </table>
+    </div>
+     <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p id="body"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="enterbtnbtn">确定</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="returnbtn">取消</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+{% block js %}
+    var currentObj={id:"",code:""};
+    var deleteBtn;
+    var obj;
+    var localdata;
+    var heardernavheight;
+    var windowheight;
+    var diffheight;
+    var leftnavheight;
+    init();
+    function init(){
+         heardernavheight=$("#headernav").height();
+        windowheight=$(document).height();
+        diffheight =windowheight-heardernavheight;
+        $("#leftnav").height(diffheight);
+
+        deleteBtn=$(".delete");
+        deleteBtn.click(_delete);
+        $('#myModal').on('hidden.bs.modal', function (e) {
+         if (currentObj["code"]==0){
+            console.log("成功");
+            var _id=currentObj["id"];
+                $("button[index='"+_id+"']").parents("tr").remove()
+            }
+        })
+    }
+    function _delete(){
+            reposid=this.getAttribute("index")
+            currentObj["id"]=reposid
+            $.ajax({
+                url:"/server/deleterepos",
+                type:"get",
+                data:{
+                    reposid:reposid
+                },
+                dataType:"json",
+                success:function(data){
+                    currentObj["code"]=data["code"];
+                    if(currentObj["code"]==0){
+                        $('#myModal').modal('show');
+                        $("#body").html(data["msg"])
+                    }else{
+                        $('#myModal').modal('show');
+                        $("#body").html(data["msg"])
+                    }
+                }
+            })
+        }
+{% endblock %}

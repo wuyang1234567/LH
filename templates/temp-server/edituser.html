@@ -13,6 +13,19 @@
             margin-left: 0;
             background-color: #3c3c3c;
         }
+        #exampleInputFile{
+            width: 150px;
+            height: 150px;
+            opacity:0;
+            position: absolute;
+            top:25px;
+            z-index: 999;
+        }
+        .after{
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -64,39 +77,46 @@
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">用户</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="name" placeholder="请输入用户名" name="name">
+              <input type="text" class="form-control" id="name" placeholder="请输入用户名" name="name" value={{ userInfo.username }}>
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd">
+              <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" value={{ userInfo.password }}>
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">邮箱</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="email" placeholder="请输入邮箱" name="email">
+              <input type="email" class="form-control" id="email" placeholder="请输入邮箱" name="email" value={{ userInfo.email }}>
             </div>
           </div>
             <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">头像</label>
             <div class="col-sm-10">
-              <input type="file" id="heading" placeholder="选择文件" name="heading">
-            </div>
-            <img class="preview" width="200px" height="200px" >
-          </div>
-            <div class="form-group">
-            <label for="briefInfo" class="col-sm-2 control-label">简介</label>
-            <div class="col-sm-10">
-                {{ form.media }}
-                {{ form }}
+             <input type="file" id="exampleInputFile" name="headimg">
+                    {% if userInfo.heading %}
+                        <input type="hidden"  name="preImg"  value="{{ userInfo.heading }}">
+                        <img class=" after preview" width="200px" height="200px" src="/static/uploads/{{ userInfo.heading }}"/>
+                    {% else %}
+                        <img class=" after preview"   style="border:1px solid red" src="/static/uploads/None.png" />
+                    {% endif %}
             </div>
           </div>
-        <input type="hidden" id="hidden" name="hiddenid">
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label" >内容</label>
+               <div class="col-sm-10" >
+                   <input type="hidden"  name="fuwenbenContent"  value="{{ userInfo.briefInfo }}">
+                    {{ form.media }}
+                    {{ form }}
+                </div>
+          </div>
+        <input type="hidden" id="hidden" name="hiddenid" value="{{ userInfo.id }}">
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-primary">提交</button>
+
             </div>
           </div>
     </form>
@@ -116,32 +136,12 @@
     var leftnavheight;
     init();
     function init(){
+        {#alert("8989")#}
         heardernavheight=$("#headernav").height();
         windowheight=$(document).height();
         diffheight =windowheight-heardernavheight;
         $("#leftnav").height(diffheight);
-        var _href=location.href;
-        var userid=_href.split("=")[1];
-        console.log("userid为",userid);
-        $("#hidden").val(userid);
-
-        $.ajax({
-                url:"/server/adduseredit",
-                type:"get",
-                data:{
-                    userid:userid
-                },
-                dataType:"json",
-                success:function (data) {
-                    alert("ajax成功");
-                    console.log(data["data"]["username"]);
-                    $("#name").val(data["data"]["username"]);
-                    $("#pwd").val(data["data"]["password"]);
-                    $("#email").val(data["data"]["email"]);
-                    $(".preview").attr("src","/static/uploads/"+data["data"]["heading"]);
-                    $("#briefInfo").val(data["data"]["briefInfo"]);
-                }
-            });
+         document.getElementById("id_content").value='{{ userInfo.briefInfo|safe }}';
     }
         var validate=$("form").validate({
             submitHandler:function(form){
@@ -151,19 +151,17 @@
         function sendDataToServer1() {
             $("form").ajaxSubmit(function (message) {
                 console.log("后端返回的数据" + message);
-                var data=JSON.parse(message);
-                if(data["code"]===0){
-                    alert(data["msg"]);
-
+                if(message["code"]===0){
+                    alert(message["msg"]);
                     location.href="/server/user";
                     return false
                  }
             })
         }
-        {# $("input[name='heading']").change(function(){#}
-        {#    var imgFile=this.files.item(0);#}
-        {#    var _url=window.URL.createObjectURL(imgFile);#}
-        {#    $(".preview").attr("src",_url);#}
-        {# })#}
+         $("input[name='headimg']").change(function(){
+            var imgFile=this.files.item(0);
+            var _url=window.URL.createObjectURL(imgFile);
+            $(".preview").attr("src",_url);
+         });
 </script>
 </html>

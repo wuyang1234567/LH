@@ -1,0 +1,53 @@
+{% extends 'temp-server/hearder.html' %}
+{% block username %}
+
+{% endblock %}
+{% block right %}
+<div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb" style="margin: 25px 0 0 30px">
+                <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#">文章推送</a></li>
+                <li>修改推送位</li>
+            </ol>
+        </div>
+    </div>
+<form action="/server/editreposHandler" method="post" enctype="multipart/form-data" id="form">
+{% csrf_token %}
+    <div class="input-group" style="width: 30%;margin-top: 50px">
+            <input type="hidden" name="newsid" value={{ newsid }}>
+          <select class="form-control"  id="pushposition"  name="position">
+                {% for item in positionlist %}
+                      <option
+                              {% if positionname == item.name %}
+                              selected
+                              {% endif %}
+                              value={{ item.id }}>{{ item.name }}</option>
+                      {% empty %}
+                        <option  disabled>无颜色</option>
+                {% endfor %}
+          </select>
+    </div>
+    <button class="glyphicon glyphicon-arrow-up btn-default btn" style="margin-top: 20px" type="submit">推送</button>
+</form>
+{% endblock %}
+{% block js %}
+    init()
+    function init() {
+            validate();
+    }
+    function validate(){
+        $("form").validate({
+             submitHandler:function(form){
+                $("form").ajaxSubmit(function(message){
+                    console.log(message);
+                     if (message.code === 0) {
+                        alert(message.msg);
+                        location.href = "/server/reposcontent"
+                      }else{
+                         alert(message.msg);
+                      }
+                })
+             }
+        })
+    }
+{% endblock %}

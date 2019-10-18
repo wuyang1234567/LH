@@ -13,14 +13,18 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="#">路赞新闻杂志（图片）</a>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
-               {% for item in list %}
-                    <li style="color: white;margin-right: 22px;margin-top: 13px">{{ item.name }}</li>
-               {% endfor %}
+              <li  ><a href="/client?page=1">首页</a></li>
+              {% for item in list %}
+                  <li
+                          {% if nowpage == item.id %}
+                          class="active"
+                          {% endif %}
+                  ><a href="/client/list?id={{ item.id }}">{{ item.name }}</a></li>
+              {% endfor %}
           </ul>
-        </div>
+      </div><!-- /.navbar-collapse -->
       </div>
     </nav>
 </body>

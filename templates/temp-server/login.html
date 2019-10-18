@@ -7,28 +7,15 @@
 </head>
 <body>
     <div class="container" style="margin-top: 10%">
-      <form class="form-signin" method="post" action="/server/loginhttp">
+      <form class="form-signin" method="post" action="/server/loginHandler">
         {%csrf_token%}
-
         <h2 class="form-signin-heading" style="text-align: center; margin: 40px">登录</h2>
-
         <label for="inputEmail" class="sr-only">username</label>
-
         <input  class="form-control" placeholder="username"   id="username" name="username" style="margin-bottom:30px"/>
-
         <label for="inputPassword" class="sr-only">Password</label>
-
         <input type="password" id="password" class="form-control" placeholder="Password"  name="password"  style="margin-bottom:30px"/>
-         <label for="inputPassword" class="sr-only">email</label>
-
-        <input type="password" id="password" class="form-control" placeholder="email"  name="email"  style="margin-bottom:30px"/>
-
-
         <div class="checkbox">
-
         </div>
-
-          <!-- Button trigger modal -->
         <button  class="btn btn-lg btn-primary btn-block"  data-target="#myModal" type="submit" id="register">
         登录
         </button>
@@ -42,7 +29,7 @@
             <p id="msg"></p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" id="btn">确定</button>
+            <button type="submit" class="btn btn-default" data-dismiss="modal">确定</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -68,9 +55,6 @@
                 },
                 password:{
                     required:true,
-                },
-                email:{
-                    required:true,
                 }
             },
             messages:{
@@ -79,22 +63,21 @@
                 },
                 password:{
                     required:"密码填写不符合要求",
-                },
-                email:{
-                    required:"邮箱填写不符合要求",
                 }
             },
              submitHandler:function(form){
-                $("form").ajaxSubmit(function(message){
-                   var msg=JSON.parse(message);
-                    console.log(msg);
-                     $("#msg").html(msg.message);
-                     $('#myModal').modal('show');
-                     $("#btn").click(function(){
-                        if(msg.code==="0"){
+                $("form").ajaxSubmit(function(data){
+                   {#var msg=JSON.parse(data);#}
+                   {# console.log(msg);#}
+                     {#$("#msg").html(msg.message);#}
+                     {#$('#myModal').modal('show');#}
+                        if(data.code==="0"){
+                            alert(data["msg"]);
                             location.href="/server"
+                        }else{
+                            alert("555");
+                            alert(data["msg"]);
                         }
-                     });
                 })
              }
         })

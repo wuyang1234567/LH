@@ -1,6 +1,6 @@
-{% extends 'temp-server/hearder.html' %}
-{% block right %}
-    <div style="margin:20px;">
+{% extends "temp-server/hearder.html" %}
+<div style="margin:20px;">
+    {% block right %}
               <div>
                   <h1 style="display:inline-block">欢迎使用</h1><h4 style="display:inline-block;color:#ABABAA">路赞后台管理系统</h4>
                   <hr>
@@ -16,7 +16,6 @@
                             <h1 class="glyphicon glyphicon-cloud white" aria-hidden="true" style="display:inline-block"></h1>
                             <div style="display:inline-block;right: 40px;position:absolute;" class="text-center">
                                 <h5 class="white">今日登陆用户数</h5>
-                                <h5 class="white">250</h5>
                             </div>
                           </div>
                           <div class="panel-body">
@@ -35,12 +34,12 @@
                             <h1 class="glyphicon glyphicon-th-list white" aria-hidden="true" style="display:inline-block"></h1>
                             <div style="display:inline-block;right: 40px;position:absolute;" class="text-center">
                                 <h5 class="white">文章数量</h5>
-                                <h5 class="white">17</h5>
+                                <h5 class="white">{{ count }}</h5>
                             </div>
                           </div>
                           <div class="panel-body">
                             <div class="col-md-6 text-left">
-                                <h5 style="color:#5BBA5B">查看</h5>
+                                <h5 style="color:#5BBA5B" id="articlenum"><a href="/server/articlelist?page=1">查看</a></h5>
                             </div>
                               <div class="col-md-6 text-right">
                                 <h5 style="color:#5BBA5B" class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></h5>
@@ -54,12 +53,12 @@
                             <h1 class="glyphicon glyphicon-stats white" aria-hidden="true" style="display:inline-block"></h1>
                             <div style="display:inline-block;right: 40px;position:absolute;" class="text-center">
                                 <h5 class="white">文章最大阅读数</h5>
-                                <h5 class="white">139</h5>
+                                <h5 class="white">{{ maxnum }}</h5>
                             </div>
                           </div>
                           <div class="panel-body">
                             <div class="col-md-6 text-left">
-                                <h5 style="color:#F7AE4B">查看</h5>
+                                <h5 style="color:#F7AE4B"><a href="/server/articlelist?page=1">查看</a></h5>
                             </div>
                               <div class="col-md-6 text-right">
                                 <h5 style="color:#F7AE4B" class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></h5>
@@ -73,12 +72,12 @@
                             <h1 class="glyphicon glyphicon-glass white" aria-hidden="true" style="display:inline-block"></h1>
                             <div style="display:inline-block;right: 40px;position:absolute;" class="text-center">
                                 <h5 class="white">推荐位数</h5>
-                                <h5 class="white">4</h5>
+                                <h5 class="white">{{ positioncount }}</h5>
                             </div>
                           </div>
                           <div class="panel-body">
                             <div class="col-md-6 text-left">
-                                <h5 style="color:#DE524B">查看</h5>
+                                <h5 style="color:#DE524B"><a href="/server/reposcontent">查看</a></h5>
                             </div>
                               <div class="col-md-6 text-right">
                                 <h5 style="color:#DE524B" class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></h5>
@@ -87,5 +86,5 @@
                         </div>
                   </div>
               </div>
-
+    </div>
 {% endblock %}

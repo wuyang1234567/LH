@@ -1,0 +1,53 @@
+{% extends 'temp-server/hearder.html' %}
+{% block username %}
+
+{% endblock %}
+{% block right %}
+      <div class="row">
+        <div class="col-xs-12">
+            <ol class="breadcrumb" style="margin: 25px 0 0 30px">
+                <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a>推荐位管理</a></li>
+                <li>推荐位列表</li>
+            </ol>
+        </div>
+
+    </div>
+    <div class="row" style="margin-top: 20px">
+    <div class="row "  style="margin: 25px 0 0 30px;">
+        <table class="table table-bordered ">
+          <tr>
+              <th class="text-center">id</th>
+              <th class="text-center">推荐位名称</th>
+          </tr>
+            {% for item in reposlist %}
+            <tr>
+                 <td id="id" class="text-center">{{ item.id }}</td>
+                 <td class="text-center">{{ item.name }}</td>
+{#                 </td>#}
+              </tr>
+        {% endfor %}
+        </table>
+
+    </div>
+    {#  模态框#}
+
+{#登陆成功#}
+  <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+{#        den="true">&times;</span></button>#}
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <h4 style="color: black" id="success">确认删除？</h4>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="correct">确认</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
