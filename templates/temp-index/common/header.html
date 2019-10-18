@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公共头部</title>
+</head>
+<body>
+{#最上面导航条#}
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">路赞新闻杂志（图片）</a>
+        </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+              <li data-name="0" class="navlist"><a href="/index?page=1">首页</a></li>
+              {% for item in menulist %}
+                  <li data-name="{{ item.id }}" class="navlist" style="color: white"><a href="/index/list?id={{ item.id }}">{{ item.name }}</a></li>
+              {% endfor %}
+          </ul>
+      </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
+</body>
+<script>
+</script>
+</html>

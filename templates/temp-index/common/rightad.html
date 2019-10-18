@@ -1,0 +1,15 @@
+{#        下半部分右边的三张图片#}
+      <div class="col-xs-3" style="margin-top: 40px;margin-bottom: 60px">
+          {% for item in rightnewslist %}
+            <div class="row" style="margin-bottom: 20px;width: 380px; height: 250px;position: relative;">
+                <div>
+                    {% if item.thumb %}
+                        <img src="/static/uploads/{{ item.thumb }}" class="img-thumbnail" style="width: 100%; height: 250px;position: relative;"/>
+                    {% else %}
+                         <img src="/static/image/notitle.jpg" class="img-thumbnail" style="width:100%; height: 250px;position: relative;"/>
+                    {% endif %}
+                    <p class="text-center"  style="background-color :rgba(0,0,0,0.4);height:40px;line-height:40px;color: white;bottom:-10px;position: absolute;width: 100%;">{{ item.title }}</p>
+                </div>
+            </div>
+          {% endfor %}
+      </div>

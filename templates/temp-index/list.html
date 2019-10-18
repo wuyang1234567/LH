@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cms的client端</title>
+    <link href="/static/libs/bootstrap/bootstrap-3.3.7/dist/css/bootstrap.css" rel="stylesheet">
+{#    <link href="/static/libs/bootstrap/bootstrap-3.3.7/docs/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
+    <link href="/static/libs/bootstrap/bootstrap-3.3.7/docs/examples/blog/blog.css" rel="stylesheet">
+    <!--[if lt IE 9]>{#<script src="../../assets/js/ie8-responsive-file-warning.js"></script>#}<![endif]-->
+{#    <script src="/static/libs/bootstrap/bootstrap-3.3.7/docs/assets/js/ie-emulation-modes-warning.js"></script>#}
+
+</head>
+<body>
+{% include 'temp-index/common/header.html' %}
+<div class="contain" style="margin-right: 30px">
+    <div class="row" style="margin-bottom: 100px;margin-left: 50px">
+      <div class="col-md-9">
+    {#          下半部分左边图片带文字部分#}
+            <div>
+    {#        ---------------------------------分页开始#}
+                {% for item in newsallvalue %}
+                    <div style="border-bottom: #E8E8E8 solid 2px;padding-bottom: 10px;padding-top:20px;width: 96%;" class="article" id="{{ item.id }}">
+                        <div class="row articleid">
+                          <div class="col-md-3">
+                              {%  if item.thumb %}
+                                 <img src="/static/uploads/{{ item.thumb }}"class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px"/>
+                              {% else %}
+                                  <img src="/static/image/notitle.jpg"class="img-thumbnail" style="width: 250px;height: 150px;margin-bottom: 12px"/>
+                              {% endif %}
+                          </div>
+                          <div class="col-md-9" style="margin-left: -50px">
+                              <h3>{{ item.title }}</h3>
+                              <h5 style="overflow: hidden;width: 700px;height: 20px">{{ item.content | safe }}</h5>
+                              <div style="margin-top: 60px">
+                                  <h5 style="display: inline-block;margin-left: 15px">{{ item.lasttime }}</h5>
+                                  <h5 style="display: inline-block;margin-left: 15px;color:#8CB8E4">阅读（{{ item.num }}）</h5>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+        <div class="col-xs-3"></div>
+        {% include "temp-index/common/right.html" %}
+        {% include "temp-index/common/rightad.html" %}
+  </div>
+</div>
+{% include 'temp-client/common/footer.html' %}
+</body>
+ <script src="/static/libs/jquery-3.4.1.js"></script>
+<script src="/static/libs/bootstrap/bootstrap-3.3.7/dist/js/bootstrap.js"></script>
+<script src="/static/libs/bootstrap/bootstrap-3.3.7/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="/static/libs/jquery.validate.js"></script>
+<script src="/static/libs/jquery.form.js"></script>
+<script>
+
+</script>
+</html>
