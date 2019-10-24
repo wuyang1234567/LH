@@ -15,14 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from client import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/',views.main),
-    path('client/',views.main),
-    path('list/',views.list),
-    path('detail/',views.detail),
+    path('index/',include("index.urls")),
+    # path('main/',views.main),
+    # path('list/',views.list),
+    # path('detail/',views.detail),
     path('server/',include("server.urls")),
-    path('client/',include("client.urls")),
     path('ueditor/',include("DjangoUeditor.urls")),
 ]
